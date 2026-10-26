@@ -349,7 +349,7 @@ body { position: relative; }
 /* Full width between the page margins, below the first screen */
 .footer {
   position: relative;
-  z-index: 1;
+  z-index: 0; /* bottom layer: the email note always hangs over the sketch */
   padding-top: 0;
   padding-bottom: var(--rhythm);
   padding-left: max(var(--gutter-x), env(safe-area-inset-left, 0px));

@@ -151,7 +151,7 @@ body { position: relative; }
 /* Main view: always exactly one viewport tall */
 .main-view {
   position: relative;
-  z-index: 1;
+  z-index: 2; /* above the footer sketch, so the email note hangs over it */
   min-height: 100vh;
   min-height: 100svh;
   display: flex;

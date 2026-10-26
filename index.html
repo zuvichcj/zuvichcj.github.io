@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Colton Zuvich</title>
+  <meta name="description" content="Colton Zuvich is a designer and information scientist. Founding Designer at Foley.">
+  <link rel="preload" href="fonts/Satoshi-Bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Paper GrainGradient shader, mounted by main.js. Grey100 shows if WebGL is unavailable. -->
+  <div class="paper" id="paper" aria-hidden="true"></div>
+
+  <main class="main-view">
+    <!-- Logo: hover (or tap, or keyboard focus) and it winks and waves -->
+    <div class="hello" id="hello">
+      <button class="logo-btn" id="logo-btn" type="button" aria-label="Colton Zuvich. Say hello" aria-expanded="false" aria-controls="hello-card">
+        <svg class="logo" viewBox="0 0 82 52" width="82" height="52" aria-hidden="true" focusable="false">
+          <path transform="matrix(1 0 0 1 16 7)" d="M33.000 0.000C33.000 0.000 6.374 42.404 6.374 42.404C6.288 42.541 6.141 42.628 5.979 42.637C5.818 42.647 5.662 42.577 5.560 42.450C5.560 42.450 0.000 35.500 0.000 35.500" vector-effect="non-scaling-stroke" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <path transform="matrix(1 0 0 1 27 12)" d="M3.000 0.000C4.657 0.000 6.000 1.343 6.000 3.000C6.000 4.657 4.657 6.000 3.000 6.000C1.343 6.000 0.000 4.657 0.000 3.000C0.000 1.343 1.343 0.000 3.000 0.000Z" fill="currentColor"/>
+          <!-- Right eye: open, and the wink (a half-closed lid, from the "wink" file) -->
+          <path class="eye-open" d="M55 23A3 3 0 1 1 49 23A3 3 0 1 1 55 23Z" fill="currentColor"/>
+          <path class="eye-wink" d="M57 23A4 4 0 0 1 49 23Z" fill="currentColor"/>
+          <path transform="matrix(1 0 0 1 61 16)" d="M0.000 0.000C0.000 0.000 17.149 0.000 17.149 0.000C17.517 -0.000 17.854 0.201 18.029 0.525C18.204 0.848 18.187 1.241 17.986 1.548C17.986 1.548 1.014 27.452 1.014 27.452C0.813 27.759 0.796 28.152 0.971 28.475C1.146 28.799 1.483 29.000 1.851 29.000C1.851 29.000 19.000 29.000 19.000 29.000M0.559 11.020C0.559 11.020 17.324 16.820 17.324 16.820" vector-effect="non-scaling-stroke" fill="none" stroke="currentColor" stroke-width="3"/>
+          <path transform="matrix(1 0 0 1 2 2)" d="M21.000 7.500C21.000 7.500 14.611 0.303 14.611 0.303C14.439 0.110 14.194 0.000 13.936 0.000C13.936 0.000 0.902 0.000 0.902 0.000C0.404 -0.000 0.000 0.404 0.000 0.902C0.000 0.902 0.000 28.098 0.000 28.098C0.000 28.596 0.404 29.000 0.902 29.000C0.902 29.000 13.936 29.000 13.936 29.000C14.194 29.000 14.439 28.890 14.611 28.697C14.611 28.697 21.000 21.500 21.000 21.500" vector-effect="non-scaling-stroke" fill="none" stroke="currentColor" stroke-width="2.707"/>
+        </svg>
+      </button>
+      <div class="hello-card" id="hello-card" aria-hidden="true">
+        <video id="hello-video" muted playsinline loop preload="auto" poster="media/hello-poster.jpg" width="320" height="180">
+          <source src="media/hello.webm" type="video/webm">
+          <source src="media/hello.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+
+    <!-- Symbols render in Grey300. Slashes are hidden from screen readers so "/&/" is read as "and". -->
+    <div class="intro">
+      <h1>Colton Zuvich is a designer <span class="sym"><span aria-hidden="true">/</span>&amp;<span aria-hidden="true">/</span></span> information scientist</h1>
+      <p>He gives shape to dense information environments <span class="sym" aria-hidden="true">///</span> crafting technical instruments which render complex workflows stylish <span class="sym"><span aria-hidden="true">/</span>&amp;<span aria-hidden="true">/</span></span> intelligible</p>
+      <p>Founding Designer <a class="inline-link" href="https://www.prnewswire.com/news-releases/foley-launches-new-driver-onboarding-saas-platform-301736058.html" target="_blank" rel="noopener"><span class="sym">@</span>Foley</a></p>
+    </div>
+
+    <nav class="nav" aria-label="Primary">
+      <a href="#portfolio" aria-haspopup="dialog" aria-controls="portfolio">Portfolio</a>
+      <a href="#philosophy" aria-haspopup="dialog" aria-controls="philosophy">Philosophy</a>
+      <a href="mailto:cjz36@cornell.edu" id="email-link" aria-controls="note" aria-expanded="false">Email</a>
+
+      <!-- Email note: a grid-paper tag hanging from "Email". Opens on hover /
+           keyboard focus / tap. Clicking "Email" itself opens the mail app;
+           clicking the address on the tag copies it. -->
+      <div class="note" id="note" role="group" aria-label="Email Colton">
+        <span class="note-string" aria-hidden="true"></span>
+        <div class="note-tag">
+          <p class="note-text">Drop me a note,<br>let&rsquo;s work<br>together&nbsp;:)</p>
+          <div class="note-foot">
+            <button class="note-email" type="button" id="note-copy" aria-describedby="note-hint">cjz36@cornell.edu</button>
+            <p class="note-hint" id="note-hint">
+              <span id="note-status" role="status" aria-live="polite">click to copy</span>
+              <span aria-hidden="true">&middot;</span>
+              <a class="note-write" href="mailto:cjz36@cornell.edu">or write <span aria-hidden="true">&#8599;</span></a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </main>
+
+  <!-- Footer: the main view fills the first screen; a short scroll reveals this. -->
+  <footer class="footer">
+    <picture>
+      <!-- Phones: the vertical drawing of the same machine -->
+      <source media="(max-width: 640px)" srcset="media/process-vertical.webp" type="image/webp" width="1080" height="3555">
+      <source media="(max-width: 640px)" srcset="media/process-vertical.png" type="image/png" width="1080" height="3555">
+      <source srcset="media/process.webp" type="image/webp">
+      <img class="footer-sketch" src="media/process.png" width="2762" height="854" loading="lazy" decoding="async"
+           alt="Pen sketch: a person in a striped shirt tosses cards of raw symbols into a funnel. They run through a circuit-board machine, out a hose and a second funnel, and arrive as a tidy interface on an iMac G4-style screen.">
+    </picture>
+  </footer>
+
+  <!-- Philosophy: a sheet that rises over the homepage (blurred behind it).
+       Opens from the nav or from a link to /#philosophy. -->
+  <dialog class="sheet" id="philosophy" aria-labelledby="philosophy-title">
+    <div class="sheet-bar">
+      <button class="sheet-back" type="button" data-close><span aria-hidden="true">&lt;-</span> Back</button>
+      <h2 class="sheet-label" id="philosophy-title">Philosophy <span aria-hidden="true">///</span></h2>
+    </div>
+
+    <!-- Each rule: text on the left, a figure slot on the right for a future
+         diagram, sketch or ASCII drawing. Put it inside .rule-figure. -->
+    <div class="sheet-scroll">
+    <ol class="rules">
+      <li class="rule">
+        <div class="rule-text">
+          <h3>Start at the Information Layer</h3>
+          <p>Information is at the heart of an interface - the glyphs, marks, and symbols meaningfully arranged into schemas help make sense of the system. It is the underlying structure which permeates every product surface. A cohesive architecture helps implicitly explain what a tool can do <span class="sym"><span aria-hidden="true">/</span>&amp;<span aria-hidden="true">/</span></span> where affordances reside.</p>
+        </div>
+        <div class="rule-figure" aria-hidden="true"><pre class="ascii" data-art="information"> ______________________
+|  [__]  [_____]   (o) |
+|______________________|
+    :      :      :
+ +--+--+   +--+   +--+
+ |  |  |---|  |---|  |
+ +--+--+   +--+   +--+
+    :      :      :
+ <b class="hl"># % &amp; @ * + = ~ ? ! $</b></pre></div>
+      </li>
+      <li class="rule">
+        <div class="rule-text">
+          <h3>Context is Everything</h3>
+          <p>Products never exist in a black box, but in dynamic <span class="sym"><span aria-hidden="true">/</span>&amp;<span aria-hidden="true">/</span></span> cybernetic environments. Designers should seek to understand the political, social, and economic context(s) where a product may be used. Who is the person behind the screen? Where are they? Why are they using it?</p>
+        </div>
+        <div class="rule-figure" aria-hidden="true"><pre class="ascii" data-art="context">      .  ~  ?  ~  .
+   .  ~  .  -  .  ~  .
+  ~  .  .-------.  .  ~
+  ?  :  |  <b class="hl">[#]</b>  |  :  ?
+  ~  '  '-------'  '  ~
+   '  ~  '  -  '  ~  '
+      '  ~  ?  ~  '</pre></div>
+      </li>
+      <li class="rule">
+        <div class="rule-text">
+          <h3>Thoughtful Care is Always Remembered</h3>
+          <p>Solving a problem for purely utilitarian <span class="sym"><span aria-hidden="true">/</span>&amp;<span aria-hidden="true">/</span></span> functional purposes is not enough. People can always feel - deep in their bones - when a tool was crafted with them in mind, subtly anticipating their needs. I believe good design scales care. Jony Ive <a class="inline-link" href="https://www.youtube.com/watch?v=nIoRRan0KE4" target="_blank" rel="noopener">would agree</a>.</p>
+        </div>
+        <div class="rule-figure" aria-hidden="true"><pre class="ascii" data-art="care">          <b class="hl">&lt;3</b>
+         .  .
+       &lt;3 .. &lt;3
+      .  .  .  .
+    &lt;3 .. &lt;3 .. &lt;3
+   .  .  .  .  .  .
+ &lt;3 .. &lt;3 .. &lt;3 .. &lt;3</pre></div>
+      </li>
+      <li class="rule">
+        <div class="rule-text">
+          <h3>Unlearn <span class="sym">&rarr;</span> To Learn</h3>
+          <p>Leave preconceived notions on the field. The beginners mind may construct new realities from first principles. Unconventional approaches <span class="sym"><span aria-hidden="true">/</span>&amp;<span aria-hidden="true">/</span></span> new interface patterns tends to vie against the madding crowd.</p>
+        </div>
+        <div class="rule-figure" aria-hidden="true"><pre class="ascii" data-art="unlearn"> ##################
+ ##############
+ ##########
+ ######
+ ##
+ <b class="hl">.</b>
+ .-.
+ .-+-.
+ .-+-+-.
+ .-+-+-+-.
+ .-+-+-+-+-+-.</pre></div>
+      </li>
+      <li class="rule">
+        <div class="rule-text">
+          <h3>Tools contain worldviews</h3>
+          <p>McLuhan&rsquo;s seminal quip, &ldquo;We shape our tools, and thereafter our tools shape us&rdquo; suggests that a tool embeds a value-structure. Opinions from its makers on how we ought to live. Designers should be careful to embed values which make the world a better place.</p>
+        </div>
+        <div class="rule-figure" aria-hidden="true"><pre class="ascii" data-art="tools"> .========.
+ '===||==='--------.
+     ||            |
+     ||            v
+     ||        .-~~~~-.
+     ||       ( ~ <b class="hl">@</b> ~~ )
+     ||        '-~~~~-'
+     ||            |
+     ''&lt;-----------'</pre></div>
+      </li>
+      <li class="rule">
+        <div class="rule-text">
+          <h3>Subtraction is (usually) the answer</h3>
+          <p>When faced with ambiguity designers tend to add <span class="sym"><span aria-hidden="true">/</span>&amp;<span aria-hidden="true">/</span></span> add <span class="sym"><span aria-hidden="true">/</span>&amp;<span aria-hidden="true">/</span></span> add. Addition bloats <span class="sym"><span aria-hidden="true">/</span>&amp;<span aria-hidden="true">/</span></span> complicates. Subtraction forces clarity - what is truly the essence of this problem?</p>
+        </div>
+        <div class="rule-figure" aria-hidden="true"><pre class="ascii" data-art="subtraction"> + + + + + + + + + + +
+ + + + + + + + + + + +
+ + + + + + + + + + + +
+ + + + + + + + + + + +
+
+      -  -  -  -  -
+
+          <b class="hl">[*]</b></pre></div>
+      </li>
+      <li class="rule">
+        <div class="rule-text">
+          <h3>The design lies in the edit</h3>
+          <p>&ldquo;The more you produce, your character or your talent will emerge (for better or for worse). Your identity, your personality, your vision, whatever &hellip; You&rsquo;ll be able to edit something that becomes who you are.&rdquo; - Rick Owens</p>
+        </div>
+        <div class="rule-figure" aria-hidden="true"><pre class="ascii" data-art="edit">  ____  ____  ____
+ |~~~~||~~~~||~~~~|
+ |~~~~||~~~~||~~~~|
+ |____||____||____|
+ 8&lt; - - - - - - - - -
+        ____
+       <b class="hl">|~~~~|</b>
+       <b class="hl">|~~~~|</b>
+       <b class="hl">|____|</b></pre></div>
+      </li>
+      <li class="rule">
+        <div class="rule-text">
+          <h3>Design is Both an Art <span class="sym"><span aria-hidden="true">// </span>&amp;<span aria-hidden="true"> //</span></span> A Science</h3>
+          <p>We can study the socio-psychological quirks of a user <span class="sym"><span aria-hidden="true">/</span>&amp;<span aria-hidden="true">/</span></span> their interaction with a system - a/b testing <span class="sym"><span aria-hidden="true">/</span>&amp;<span aria-hidden="true">/</span></span> tweaking forever. Yet, the functional result can still remain soulless. A product should bear the soul of its maker.</p>
+        </div>
+        <div class="rule-figure" aria-hidden="true"><pre class="ascii" data-art="art-science"> |       .  :  .~~~~.
+ |     .    : /  __  \
+ |    .     :|  ( <b class="hl">*</b>) |
+ |  .       :|   '-'  /
+ | .        : \_____.'
+ |.         :
+ +--------  :</pre></div>
+      </li>
+    </ol>
+    </div>
+  </dialog>
+
+  <!-- Portfolio: same rising sheet as Philosophy. Left rail (3 of 12 columns):
+       Back, then the intro, illustration and counter. Right: the works, one
+       per screen, scroll freely and snap to the nearest when you let go.
+       Order comes from the numbered files in media/work/. -->
+  <dialog class="sheet sheet--portfolio" id="portfolio" aria-labelledby="portfolio-title">
+    <div class="pf">
+      <aside class="pf-side">
+        <button class="sheet-back" type="button" data-close><span aria-hidden="true">&lt;-</span> Back</button>
+        <div class="pf-intro">
+          <h2 class="sheet-label" id="portfolio-title">Selected Work(s) <span aria-hidden="true">///</span></h2>
+          <p class="pf-text">My practice centers on <span class="sym" aria-hidden="true">**</span> enabling <span class="sym" aria-hidden="true">**</span> workers to solution in <span class="sym" aria-hidden="true">~</span>Arcaine<span class="sym" aria-hidden="true">~</span> information environments</p>
+          <picture>
+            <source srcset="media/illus-monitor.webp" type="image/webp">
+            <img class="pf-illus" src="media/illus-monitor.png" width="512" height="361" alt="" loading="lazy" decoding="async">
+          </picture>
+        </div>
+      </aside>
+      <div class="pf-main">
+        <ol class="pf-gallery" id="pf-gallery" tabindex="0" aria-label="Selected works, 23 images. Use the arrow keys to move between them.">
+          <li class="pf-slide" data-title="Dash Homepage" aria-label="1 of 23: Dash Homepage">
+            <img src="media/work/01-dash-homepage.webp" width="1680" height="1600" alt="Dash Homepage" loading="eager" decoding="async">
+          </li>
+          <li class="pf-slide" data-title="Driver Self-Service" aria-label="2 of 23: Driver Self-Service">
+            <img src="media/work/02-driver-self-service.webp" width="1680" height="1600" alt="Driver Self-Service" loading="eager" decoding="async">
+          </li>
+          <li class="pf-slide" data-title="Dash Nav" aria-label="3 of 23: Dash Nav">
+            <img src="media/work/03-dash-nav.webp" width="1680" height="1600" alt="Dash Nav" loading="lazy" decoding="async">
+          </li>
+          <li class="pf-slide" data-title="Dash Logo" aria-label="4 of 23: Dash Logo">
+            <img src="media/work/04-dash-logo.webp" width="1680" height="1600" alt="Dash Logo" loading="lazy" decoding="async">
+          </li>
+          <li class="pf-slide" data-title="Email Branding" aria-label="5 of 23: Email Branding">
+            <img src="media/work/05-email-branding.webp" width="1680" height="1600" alt="Email Branding" loading="lazy" decoding="async">
+          </li>
+          <li class="pf-slide" data-title="Alerts Workspace" aria-label="6 of 23: Alerts Workspace">
+            <img src="media/work/06-alerts-workspace.webp" width="1680" height="1600" alt="Alerts Workspace" loading="lazy" decoding="async">
+          </li>
+          <li class="pf-slide" data-title="BASIC Insights" aria-label="7 of 23: BASIC Insights">
+            <img src="media/work/07-basic-insights.webp" width="1680" height="1600" alt="BASIC Insights" loading="lazy" decoding="async">
+          </li>
+          <li class="pf-slide" data-title="ISS Scores" aria-label="8 of 23: ISS Scores">
+            <img src="media/work/08-iss-scores.webp" width="1680" height="1600" alt="ISS Scores" loading="lazy" decoding="async">
+          </li>
+          <li class="pf-slide" data-title="Candidate Onboarding" aria-label="9 of 23: Candidate Onboarding">
+            <img src="media/work/09-candidate-onboarding.webp" width="1680" height="1600" alt="Candidate Onboarding" loading="lazy" decoding="async">
+          </li>
+          <li class="pf-slide" data-title="OCR Application" aria-label="10 of 23: OCR Application">
+            <img src="media/work/10-ocr-application.webp" width="1680" height="1600" alt="OCR Application" loading="lazy" decoding="async">
+          </li>
+          <li class="pf-slide" data-title="Disclosures" aria-label="11 of 23: Disclosures">
+            <img src="media/work/11-disclosures.webp" width="1680" height="1600" alt="Disclosures" loading="lazy" decoding="async">
+          </li>
+          <li class="pf-slide" data-title="Invoice" aria-label="12 of 23: Invoice">
+            <img src="media/work/12-invoice.webp" width="1680" height="1600" alt="Invoice" loading="lazy" decoding="async">
+          </li>
+          <li class="pf-slide" data-title="Adverse Action" aria-label="13 of 23: Adverse Action">
+            <img src="media/work/13-adverse-action.webp" width="1680" height="1600" alt="Adverse Action" loading="lazy" decoding="async">
+          </li>
+          <li class="pf-slide" data-title="DART Logo" aria-label="14 of 23: DART Logo">
+            <img src="media/work/14-dart-logo.webp" width="1680" height="1600" alt="DART Logo" loading="lazy" decoding="async">
+          </li>
+          <li class="pf-slide" data-title="DART Homepage" aria-label="15 of 23: DART Homepage">
+            <img src="media/work/15-dart-homepage.webp" width="1680" height="1600" alt="DART Homepage" loading="lazy" decoding="async">
+          </li>
+          <li class="pf-slide" data-title="DART Design System" aria-label="16 of 23: DART Design System">
+            <img src="media/work/16-dart-design-system.webp" width="1680" height="1600" alt="DART Design System" loading="lazy" decoding="async">
+          </li>
+          <li class="pf-slide" data-title="Collection Site Map Search" aria-label="17 of 23: Collection Site Map Search">
+            <img src="media/work/17-collection-site-map-search.webp" width="1680" height="1600" alt="Collection Site Map Search" loading="lazy" decoding="async">
+          </li>
+          <li class="pf-slide" data-title="API Tool" aria-label="18 of 23: API Tool">
+            <img src="media/work/18-api-tool.webp" width="1680" height="1600" alt="API Tool" loading="lazy" decoding="async">
+          </li>
+          <li class="pf-slide" data-title="Site Details" aria-label="19 of 23: Site Details">
+            <img src="media/work/19-site-details.webp" width="1680" height="1600" alt="Site Details" loading="lazy" decoding="async">
+          </li>
+          <li class="pf-slide" data-title="Merge Sites" aria-label="20 of 23: Merge Sites">
+            <img src="media/work/20-merge-sites.webp" width="1680" height="1600" alt="Merge Sites" loading="lazy" decoding="async">
+          </li>
+          <li class="pf-slide" data-title="DART Search" aria-label="21 of 23: DART Search">
+            <img src="media/work/21-dart-search.webp" width="1680" height="1600" alt="DART Search" loading="lazy" decoding="async">
+          </li>
+          <li class="pf-slide" data-title="Manifesto" aria-label="22 of 23: Manifesto">
+            <img src="media/work/22-manifesto.webp" width="1680" height="1600" alt="Manifesto" loading="lazy" decoding="async">
+          </li>
+          <li class="pf-slide" data-title="End Credits" aria-label="23 of 23: End Credits">
+            <img src="media/work/23-end-credits.webp" width="1680" height="1600" alt="End Credits" loading="lazy" decoding="async">
+          </li>
+        </ol>
+        <p class="pf-count" aria-live="polite"><span class="pf-count-n" id="pf-count-n">01</span><span class="sym" aria-hidden="true"> / </span><span class="pf-count-of">23</span> <span class="pf-count-title" id="pf-count-title">Dash Homepage</span></p>
+      </div>
+    </div>
+  </dialog>
+
+  <script type="module" src="hello.js"></script>
+  <script type="module" src="sheets.js"></script>
+  <script type="module" src="portfolio.js"></script>
+  <script type="module" src="note.js"></script>
+  <script type="module" src="main.js"></script>
+</body>
+</html>

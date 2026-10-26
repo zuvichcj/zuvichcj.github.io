@@ -1,0 +1,865 @@
+/* Layout: plain-text academic page. One left-aligned column, a 56px rhythm
+   between logo, intro and nav, set over Paper's grain gradient. */
+
+/* Satoshi by Indian Type Foundry (Fontshare, ITF Free Font License).
+   Self-hosted WOFF2, converted from the desktop TTFs. Browsers only
+   download the faces a page actually uses. */
+@font-face {
+  font-family: "Satoshi";
+  src: url("fonts/Satoshi-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("fonts/Satoshi-LightItalic.woff2") format("woff2");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("fonts/Satoshi-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("fonts/Satoshi-Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("fonts/Satoshi-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("fonts/Satoshi-MediumItalic.woff2") format("woff2");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("fonts/Satoshi-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("fonts/Satoshi-BoldItalic.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("fonts/Satoshi-Black.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("fonts/Satoshi-BlackItalic.woff2") format("woff2");
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Reenie Beanie by James Grieshaber (SIL Open Font License, see
+   fonts/ReenieBeanie-OFL.txt): the handwriting on the email note. */
+@font-face {
+  font-family: "Reenie Beanie";
+  src: url("fonts/ReenieBeanie.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Greyscale (final design system) */
+  --grey-900: #171B31;
+  --grey-800: #2B2F45;
+  --grey-700: #535C76;
+  --grey-300: #C5C9D6;
+  --grey-200: #E5E6E9;
+  --grey-100: #F8F8F8;
+  --white: #FFFFFF;
+
+  /* Logo ink, from the wink/open logo files (was #2B09B2 in Paper) */
+  --logo: #4154EC;
+
+  /* Accent: interactive states only */
+  --accent: #FE2C25;
+
+  /* Motion: a gentle spring (damping 0.72, ~4% overshoot), sampled for CSS */
+  /* Pendulum swing (damping 0.32) for the hanging email tag */
+  --swing: linear(0, 0.055, 0.199, 0.4, 0.624, 0.844, 1.037, 1.187, 1.288, 1.338, 1.343, 1.31, 1.251, 1.177, 1.099, 1.026, 0.964, 0.919, 0.891, 0.881, 0.885, 0.9, 0.923, 0.95, 0.976, 1, 1.019, 1.033, 1.04, 1.041, 1.038, 1.032, 1.023, 1.014, 1.005, 0.997, 0.991, 0.987, 0.986, 0.986, 0.988, 0.99, 0.993, 0.997, 1);
+  /* Softer spring (damping 0.86, ~0.5% overshoot) for the full-height sheet */
+  --sheet-spring: linear(0, 0.0346, 0.1176, 0.2249, 0.3401, 0.4529, 0.5569, 0.6489, 0.7277, 0.7933, 0.8467, 0.8892, 0.9223, 0.9475, 0.9663, 0.9799, 0.9896, 0.9961, 1.0004, 1.003, 1.0044, 1.0049, 1.005, 1.0047, 1.0042, 1.0036, 1.0031, 1.0025, 1);
+  --spring: linear(0, 0.0411, 0.1408, 0.2705, 0.4094, 0.5436, 0.6645, 0.7676, 0.8515, 0.9166, 0.9647, 0.9982, 1.0198, 1.0321, 1.0376, 1.0382, 1.0357, 1.0313, 1.0261, 1.0208, 1.0158, 1.0114, 1.0077, 1.0047, 1.0025, 1.0008, 0.9997, 0.999, 0.9987, 0.9985, 1);
+
+  --font: "Satoshi", "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+
+  /* Paper frame: 1512 × 982 — margin 121, logo top 99, gaps of 56 */
+  --gutter-x: clamp(24px, 8vw, 121px);
+  --top: clamp(48px, 10vh, 99px);
+  --rhythm: 56px;
+  --line: 20px;
+
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { margin: 0; }
+
+body {
+  background: var(--grey-100);
+  color: var(--grey-900);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: var(--line);
+  font-weight: 700;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Shader layer: spans the whole page, so the blobs scroll with the content */
+body { position: relative; }
+.paper {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: var(--grey-100);
+  pointer-events: none;
+}
+.paper canvas { display: block; }
+
+/* Main view: always exactly one viewport tall */
+.main-view {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--rhythm);
+  padding-top: calc(var(--top) + env(safe-area-inset-top, 0px));
+  padding-bottom: var(--rhythm);
+  padding-left: max(var(--gutter-x), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter-x), env(safe-area-inset-right, 0px));
+}
+
+/* ---------- Logo + hello card ---------- */
+
+.hello {
+  position: relative;
+  z-index: 2; /* card floats over the intro text */
+}
+
+.logo-btn {
+  display: block;
+  padding: 0;
+  margin: 0 0 0 -1px; /* lines the C's stroke up optically with the text edge */
+  border: 0;
+  background: none;
+  color: var(--logo);
+  cursor: default;
+  -webkit-tap-highlight-color: transparent;
+  border-radius: 4px;
+}
+.logo-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 6px;
+}
+
+.logo {
+  display: block;
+  width: 82px;
+  height: 52px;
+  overflow: visible;
+}
+
+/* The wink: the open eye squeezes shut, then the lid drops in from the top. */
+.eye-open,
+.eye-wink {
+  transform-box: fill-box;
+}
+.eye-open {
+  transform-origin: center;
+  transition: transform 260ms var(--spring), opacity 120ms ease-out 40ms;
+}
+.eye-wink {
+  transform-origin: center top;
+  transform: scaleY(0);
+  opacity: 0;
+  transition: transform 90ms ease-in, opacity 60ms ease-in;
+}
+.is-waving .eye-open {
+  transform: scaleY(0.1);
+  opacity: 0;
+  transition: transform 90ms ease-in, opacity 60ms ease-in 30ms;
+}
+.is-waving .eye-wink {
+  transform: scaleY(1);
+  opacity: 1;
+  transition: transform 220ms var(--spring) 60ms, opacity 80ms ease-out 60ms;
+}
+
+/* Video card: a print-like frame that lifts out from under the logo.
+   Enter on a gentle spring; exit quickly, sinking and softening as it goes. */
+.hello-card {
+  position: absolute;
+  top: 46px;
+  left: 26px;
+  width: min(320px, calc(100vw - 2 * var(--gutter-x) - 26px));
+  padding: 3px;
+  background: var(--white);
+  border-radius: 6px;
+  box-shadow:
+    0 0 0 0.5px rgb(23 27 49 / 0.06),
+    0 1px 2px rgb(23 27 49 / 0.08),
+    0 4px 8px -2px rgb(23 27 49 / 0.08),
+    0 14px 24px -8px rgb(23 27 49 / 0.16),
+    0 32px 48px -20px rgb(23 27 49 / 0.22);
+  pointer-events: none;
+  transform-origin: 20px 0;
+
+  /* resting (hidden) state */
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(10px) rotate(0deg) scale(0.9);
+  filter: blur(6px);
+  transition:
+    transform 220ms cubic-bezier(0.4, 0, 1, 1),
+    opacity 180ms ease-in,
+    filter 200ms ease-in,
+    visibility 0s linear 220ms;
+}
+.hello-card video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 3px;
+  background: var(--grey-200);
+}
+.is-waving .hello-card {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0) rotate(-2.5deg) scale(1);
+  filter: blur(0);
+  transition:
+    transform 620ms var(--spring) 40ms,
+    opacity 200ms ease-out 40ms,
+    filter 320ms ease-out 40ms,
+    visibility 0s linear 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hello-card,
+  .is-waving .hello-card {
+    transform: rotate(-2.5deg);
+    filter: none;
+  }
+  .hello-card { transition: opacity 160ms ease-in, visibility 0s linear 160ms; }
+  .is-waving .hello-card { transition: opacity 160ms ease-out, visibility 0s; }
+  .eye-open, .eye-wink,
+  .is-waving .eye-open, .is-waving .eye-wink { transition: none; }
+}
+
+/* Intro: one font, one size, one weight. Paragraphs separated by exactly one blank line. */
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--line);
+  max-width: 31em; /* 496px */
+  min-width: 0;
+}
+.intro h1,
+.intro p {
+  margin: 0;
+  font: inherit;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.sym { color: var(--grey-300); }
+
+/* Links inside running text: keep the text's own colors. The whole link,
+   symbols included, takes the accent on hover. */
+.inline-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+.inline-link .sym { transition: color 160ms ease; }
+.inline-link:hover,
+.inline-link:hover .sym,
+.inline-link:focus-visible,
+.inline-link:focus-visible .sym {
+  color: var(--accent);
+}
+/* Keyboard focus only */
+.inline-link:focus-visible {
+  outline: none;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+/* Nav */
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 17px;
+  text-transform: uppercase;
+}
+.nav a {
+  color: var(--grey-700);
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+.nav a:hover { color: var(--accent); }
+.nav a:focus-visible {
+  outline: none;
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+/* ---------- Footer ---------- */
+
+/* Full width between the page margins, below the first screen */
+.footer {
+  position: relative;
+  z-index: 1;
+  padding-top: 0;
+  padding-bottom: var(--rhythm);
+  padding-left: max(var(--gutter-x), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter-x), env(safe-area-inset-right, 0px));
+}
+.footer-sketch {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* As the footer scrolls in, the sketch rises into place (scroll-linked
+   where supported; elsewhere it's simply there). */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .footer-sketch {
+      animation: sketch-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 100%;
+    }
+    @keyframes sketch-rise {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: none; }
+    }
+  }
+}
+
+/* ---------- Email note ---------- */
+/* A grid-paper hang tag on a string from "Email", written by hand.
+   It swings in like it was just hung up. */
+
+.nav { position: relative; }
+
+.note {
+  --tag-w: 244px;
+  --string: 34px;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: var(--note-x, 0px);
+  z-index: 3;
+  width: var(--tag-w);
+  padding-top: var(--string);
+  transform-origin: 50% 0;   /* swings from where the string is tied */
+  /* shadow on the wrapper so it follows the hole-punched shape */
+  filter: drop-shadow(0 1px 1px rgb(23 27 49 / 0.10)) drop-shadow(0 12px 18px rgb(23 27 49 / 0.14));
+
+  /* hidden */
+  visibility: hidden;
+  opacity: 0;
+  transform: rotate(-14deg) translateY(-6px);
+  transition:
+    transform 220ms cubic-bezier(0.4, 0, 1, 1),
+    opacity 180ms ease-in,
+    visibility 0s linear 220ms;
+}
+.note.is-open {
+  visibility: visible;
+  opacity: 1;
+  transform: rotate(2deg);
+  transition:
+    transform 1500ms var(--swing),
+    opacity 160ms ease-out,
+    visibility 0s;
+}
+
+/* the string: from the nav down to the punched hole */
+.note-string {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: calc(var(--string) + 18px);
+  background: rgb(23 27 49 / 0.55);
+  transform: translateX(-0.5px);
+}
+.note-string::after { /* the loop through the hole */
+  content: "";
+  position: absolute;
+  left: -4px;
+  bottom: -4px;
+  width: 8px;
+  height: 8px;
+  border: 1px solid rgb(23 27 49 / 0.55);
+  border-top-color: transparent;
+  border-radius: 50%;
+}
+
+.note-tag {
+  --paper: #F4F1DE;
+  --grid: rgb(108 128 104 / 0.22);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 300px;
+  padding: 44px 20px 18px;
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 14px 14px;
+  background-position: -1px -1px;
+  border-radius: 2px;
+  /* punched hole near the top */
+  -webkit-mask: radial-gradient(circle at 50% 18px, transparent 6px, #000 6.5px);
+  mask: radial-gradient(circle at 50% 18px, transparent 6px, #000 6.5px);
+}
+
+.note-text,
+.note-email,
+.note-hint {
+  font-family: "Reenie Beanie", "Bradley Hand", "Segoe Print", cursive;
+  font-weight: 400;
+  text-transform: none;
+  color: #1E2240; /* pen ink */
+}
+.note-text {
+  margin: 0;
+  font-size: 32px;
+  line-height: 32px;
+  white-space: nowrap;
+  transform: rotate(-2deg);
+  transform-origin: 0 0;
+}
+.note-foot {
+  margin-top: auto;
+  padding-top: 28px;
+}
+.note-email {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 27px;
+  line-height: 28px;
+  cursor: copy;
+  transform: rotate(-1deg);
+  transition: color 160ms ease;
+}
+.note-email:hover,
+.note-email:focus-visible { color: var(--accent); }
+.note-email:focus-visible {
+  outline: none;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+.note-hint {
+  margin: 4px 0 0;
+  font-size: 19px;
+  line-height: 20px;
+  color: rgb(30 34 64 / 0.55);
+}
+.note-hint .is-copied { color: var(--accent); }
+.nav .note-write {
+  color: inherit;
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+.nav .note-write:hover,
+.nav .note-write:focus-visible { color: var(--accent); }
+
+/* keep "Email" lit while its note is open */
+.nav a[aria-expanded="true"] { color: var(--accent); }
+
+@media (prefers-reduced-motion: reduce) {
+  .note, .note.is-open { transform: rotate(2deg); }
+  .note { transition: opacity 160ms ease-in, visibility 0s linear 160ms; }
+  .note.is-open { transition: opacity 160ms ease-out, visibility 0s; }
+}
+
+/* ---------- Philosophy sheet ---------- */
+/* From the Paper "Philosophy Page" frame: frosted panel (Grey100-ish at 80%,
+   10px backdrop blur, 40px radius), inset from the top and sides and running
+   off the bottom edge. Back at 43/40; content column 676 wide. */
+
+html.sheet-open { overflow: hidden; }
+
+.sheet {
+  /* Option B: a thin 24px band of the homepage shows around the sheet */
+  --sheet-top: clamp(12px, 2.5vh, 24px);
+  --sheet-side: clamp(8px, 1.6vw, 24px);
+  /* Shared by the top bar and the rules so the label and rules line up.
+     The first column never gets narrower than the Back button; the content
+     column gives way instead. */
+  --sheet-cols: minmax(72px, 1fr) minmax(0, 676px) minmax(0, 1fr);
+  --sheet-col-gap: 32px;
+
+  position: fixed;
+  inset: var(--sheet-top) var(--sheet-side) -40px; /* the extra 40px hides below the screen edge */
+  width: auto;
+  height: auto;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0 0 40px;
+  border: 0;
+  border-radius: 40px 40px 0 0;
+  background: rgb(247 247 246 / 0.8);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 3px rgb(0 0 0 / 0.2), 0 24px 64px -24px rgb(23 27 49 / 0.18);
+  color: var(--grey-900);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  /* closed */
+  transform: translateY(calc(100% + 40px));
+  transition: transform 320ms cubic-bezier(0.4, 0, 1, 1);
+}
+.sheet.is-open {
+  transform: translateY(0);
+  transition: transform 700ms var(--sheet-spring);
+}
+.sheet:not([open]) { display: none; }
+.sheet:focus, .sheet:focus-visible { outline: none; }
+.sheet::backdrop { background: transparent; }
+
+/* The rules scroll under the bar and fade out as they reach it */
+.sheet-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--grey-300) transparent;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 28px);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 28px);
+}
+
+/* Top bar: stays put above the scrolling rules */
+.sheet-bar {
+  flex: none;
+  display: grid;
+  grid-template-columns: var(--sheet-cols);
+  column-gap: var(--sheet-col-gap);
+  align-items: start;
+  padding: 40px 43px 12px;
+}
+.sheet-back {
+  grid-column: 1;
+  justify-self: start;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--grey-700);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 160ms ease;
+}
+.sheet-back:hover,
+.sheet-back:focus-visible { color: var(--accent); }
+.sheet-back:focus-visible {
+  outline: none;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+.sheet-label {
+  grid-column: 2;
+  margin: 0;
+  font: inherit;
+  color: var(--logo);
+  text-transform: uppercase;
+}
+
+/* Rules: one box per rule, text left and figure slot right */
+.rules {
+  list-style: none;
+  margin: 0;
+  padding: 24px 43px 96px;
+  display: grid;
+  grid-template-columns: var(--sheet-cols);
+  column-gap: var(--sheet-col-gap);
+  row-gap: 0;
+  text-transform: uppercase;
+}
+/* Hairline between rules */
+.rule { padding-block: 48px; }
+.rule:first-child { padding-top: 0; }
+.rule + .rule { border-top: 1px solid var(--grey-200); }
+.rule {
+  grid-column: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 192px;
+  justify-content: space-between;
+  column-gap: 40px;
+  align-items: start;
+}
+.rule-text { min-width: 0; }
+.rule h3 {
+  margin: 0 0 16px;
+  font-size: 24px;
+  line-height: 30px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--grey-900);
+  text-wrap: balance;
+}
+.rule p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--grey-900);
+}
+
+/* Figure slot: reserved space for a future diagram / sketch / ASCII piece */
+.rule-figure {
+  width: 192px;
+  min-height: 151px;
+  margin-top: 4px;
+}
+.rule-figure > * { display: block; max-width: 100%; height: auto; }
+.rule-figure pre {
+  margin: 0;
+  font: 500 13px/16px ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  letter-spacing: 0;
+  color: var(--grey-700);
+  text-transform: none;
+  white-space: pre;
+  overflow: visible;
+  user-select: none;
+}
+/* the one focal glyph in each figure */
+.ascii .hl { font-weight: inherit; color: var(--logo); }
+
+/* Narrower panels: figure moves below the text so the text keeps its measure */
+@media (max-width: 960px) {
+  .rule { grid-template-columns: minmax(0, 1fr); row-gap: 20px; }
+  .rule-figure { width: auto; min-height: 0; margin: 0; }
+  .rule-figure:empty { display: none; }
+}
+
+@media (max-width: 720px) {
+  .sheet { border-radius: 24px 24px 0 0; }
+  .sheet-bar {
+    grid-template-columns: 1fr;
+    row-gap: 24px;
+    padding: 24px 20px 8px;
+  }
+  .sheet-label { grid-column: 1; }
+  .rules { padding: 24px 20px 64px; grid-template-columns: minmax(0, 1fr); }
+  .rule { padding-block: 40px; }
+  .rule:first-child { padding-top: 0; }
+  .rule { grid-column: 1; grid-template-columns: minmax(0, 1fr); row-gap: 20px; }
+  .rule h3 { font-size: 20px; line-height: 26px; }
+  .rule-figure { width: auto; min-height: 0; margin: 0; }
+  .rule-figure:empty { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sheet, .sheet.is-open { transition: opacity 180ms ease; transform: none; }
+  .sheet { opacity: 0; }
+  .sheet.is-open { opacity: 1; }
+}
+
+/* ---------- Portfolio sheet ---------- */
+/* From the Paper "Portfolio Page" frame: the left rail takes ~3 of 12
+   columns (359 of 1346); the works fill the rest at 1.05:1. */
+
+.sheet--portfolio .pf {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(300px, 359fr) minmax(0, 987fr);
+}
+
+.pf-side {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 32px;
+  padding: 40px 24px 32px 43px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.pf-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 307px;
+}
+.pf-intro .sheet-label {
+  margin-bottom: 8px;
+  font-size: 14px;
+  line-height: 18px;
+}
+.pf-text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--grey-900);
+  text-transform: uppercase;
+}
+.pf-illus {
+  display: block;
+  width: 256px;
+  max-width: 100%;
+  height: auto;
+  margin-top: 40px;
+}
+/* Right side: the gallery, with the counter fixed underneath it */
+.pf-main {
+  position: relative;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.pf-main .pf-gallery { flex: 1; }
+/* Counter floats in the bottom-right corner of the gallery (the captions
+   in the works sit bottom-left), on a small frosted chip so it reads over
+   light and dark works alike. */
+.pf-count {
+  position: absolute;
+  /* pinned inside the bottom-right corner of the image (set by portfolio.js) */
+  right: var(--count-right, 40px);
+  bottom: var(--count-bottom, 16px);
+  z-index: 1;
+  margin: 0;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: rgb(247 247 246 / 0.82);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--grey-700);
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+.pf-count-n,
+.pf-count-of { color: var(--grey-900); }
+.pf-count-title { margin-left: 8px; }
+
+/* Gallery: free scroll, snaps to the nearest work when you let go */
+.pf-gallery {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+  outline: none;
+}
+.pf-gallery::-webkit-scrollbar { display: none; }
+/* keyboard focus on the gallery shows on the counter chip */
+.pf-main:has(.pf-gallery:focus-visible) .pf-count { box-shadow: 0 0 0 1.5px var(--accent); }
+.pf-slide {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 32px 8px 0;
+  scroll-snap-align: center;
+}
+.pf-slide img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  aspect-ratio: 1680 / 1600;
+  object-fit: contain;
+}
+
+/* Narrower screens: one column; the whole sheet scrolls, works stacked */
+@media (max-width: 720px) {
+  .sheet--portfolio .pf {
+    display: block;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scroll-snap-type: y proximity;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 20px);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 20px);
+  }
+  .pf-side {
+    scroll-snap-align: start;
+    overflow: visible;
+    padding: 24px 20px 8px;
+    gap: 32px;
+  }
+  .pf-illus { width: 180px; margin-top: 24px; }
+  .pf-count { display: none; }
+  .pf-gallery {
+    overflow: visible;
+    scroll-snap-type: none;
+    padding: 8px 0 48px;
+  }
+  .pf-slide {
+    height: auto;
+    padding: 12px 8px;
+    scroll-snap-align: center;
+  }
+  .pf-slide img { width: 100%; max-height: none; }
+}
+
+::selection { background: var(--grey-900); color: var(--grey-100); }
+
+@media (max-width: 480px) {
+  :root { --rhythm: 40px; }
+}

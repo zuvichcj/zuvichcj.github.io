@@ -1,2 +1,4 @@
 # zuvichcj.github.io
-portfolio
+portfolio 
+
+experience designer /// toolmaker /// information scientist

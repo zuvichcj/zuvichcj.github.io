@@ -8,7 +8,7 @@ const sheets = new Map();
 
 for (const el of document.querySelectorAll('dialog.sheet[id]')) {
   const hash = `#${el.id}`;
-  const state = { el, hash, closing: false, opener: null };
+  const state = { el, hash, closing: false, opener: null, viaKeyboard: false };
   sheets.set(hash, state);
 
   document.querySelectorAll(`a[href="${hash}"]`).forEach((a) =>
@@ -32,6 +32,9 @@ function open(state, { push = true } = {}) {
   if (el.open) return;
   for (const other of sheets.values()) if (other !== state && other.el.open) close(other, { fromHistory: true, instant: true });
   state.opener = document.activeElement;
+  // Opened from the keyboard? Then focus returns to the link on close.
+  // Opened by mouse/touch? Then the link goes back to its resting state.
+  state.viaKeyboard = !!(state.opener && state.opener.matches && state.opener.matches(':focus-visible'));
   document.documentElement.classList.add('sheet-open');
   el.showModal();
   el.querySelectorAll('.sheet-scroll, .pf-gallery, .pf').forEach((s) => { s.scrollTop = 0; });
@@ -49,9 +52,13 @@ function close(state, { fromHistory = false, instant = false } = {}) {
 
   const done = () => {
     state.closing = false;
-    el.close();
+    el.close(); // the browser puts focus back on the opener here
     if (![...sheets.values()].some((s) => s.el.open)) document.documentElement.classList.remove('sheet-open');
-    if (!instant && state.opener && state.opener.focus) state.opener.focus({ preventScroll: true });
+    const opener = state.opener;
+    if (opener && opener.focus) {
+      if (!instant && state.viaKeyboard) opener.focus({ preventScroll: true });
+      else if (document.activeElement === opener) opener.blur();
+    }
   };
   if (instant) done();
   else setTimeout(done, (reduceMotion.matches ? 180 : 320) + 20);

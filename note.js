@@ -13,6 +13,7 @@ const HINT = status.textContent;
 let open = false;
 let hideTimer;
 let lastPointer = 'mouse';
+let skipFocusOpen = false; // Esc hands focus back to the link without reopening
 
 // Hang the tag straight below "Email", but keep it on screen
 function place() {
@@ -55,7 +56,10 @@ link.addEventListener('click', (e) => {
   lastPointer = 'mouse';
 });
 
-link.addEventListener('focus', () => { if (link.matches(':focus-visible')) show(); });
+link.addEventListener('focus', () => {
+  if (skipFocusOpen) { skipFocusOpen = false; return; }
+  if (link.matches(':focus-visible')) show();
+});
 nav.addEventListener('focusout', () => {
   setTimeout(() => {
     const a = document.activeElement;
@@ -63,7 +67,12 @@ nav.addEventListener('focusout', () => {
   }, 0);
 });
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && open) { hide(); link.focus({ preventScroll: true }); }
+  if (e.key !== 'Escape' || !open) return;
+  // Keep keyboard users in place; otherwise just let the link rest
+  const viaKeyboard = note.contains(document.activeElement) || link.matches(':focus-visible');
+  hide();
+  if (viaKeyboard && document.activeElement !== link) { skipFocusOpen = true; link.focus({ preventScroll: true }); }
+  else if (document.activeElement === link) link.blur();
 });
 document.addEventListener('pointerdown', (e) => {
   if (open && e.pointerType !== 'mouse' && !note.contains(e.target) && e.target !== link) hide();
